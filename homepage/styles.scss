@@ -1,0 +1,105 @@
+$siggreen: #76BD99;
+
+.navbar {
+    background-color: #fff;
+    border: none;
+
+    .navbar-nav {
+
+        .nav-item > a:hover {
+        color: $siggreen;
+        transition: .5s ease;
+        }
+        .nav-item > .active {
+            color: $siggreen;
+            font-weight: bold;
+        }
+    }
+        
+    .navbar-header > a:hover {
+        color: $siggreen;
+        transition: .5s ease;
+    }
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+%heading {
+    line-height: 100%;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+h1 {
+    @extend %heading;
+    letter-spacing: 1.3rem;
+    font-size: calc(4.25rem + ((1vw - 0.48rem) * 1.5));
+}
+
+h2 {
+    @extend %heading;
+    letter-spacing: 1.5rem;
+    font-size: calc(3.25rem + ((1vw - 0.48rem) * 1.5));
+}
+
+p {
+    font-size: 70%;
+    text-align: left
+}
+
+img {
+    max-height: 250px;
+    border: 1px solid #ddd;
+    padding: 2px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+hr {
+    margin: 0px 20px;
+    margin-bottom: 30px;
+}
+
+#btn {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    border: none;
+    padding: 0.75em 4em;
+    text-align: center;
+    letter-spacing: 2px;
+    background-color: white;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+
+#btn:hover {
+    background-color: $siggreen;
+    color: #fff;
+    transition: .5s ease;
+}
+
+.iconify {
+    color: $siggreen;
+    font-size: calc(3rem - ((1vw) * 1.5));
+}
+
+.iconify:hover {
+    opacity: 0.5;
+    transition: .5s ease;
+}
+
+.contact {
+    text-align: center;
+    margin-top: 3em;
+}
+
+ul li, td {
+    list-style-type:none;
+    padding: .75em;
+}
+
+@media (min-width: 500px) {
+    .paragraph {
+        width: 65%;
+    }
+}

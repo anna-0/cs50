@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>Behind the scenes</h1>
+</div>
+<div class="container">
+    <div class="row">
+            <div class="col-sm mt-5 mx-2  mr-md-3 mb-5">
+                {% if session.ispatron %}
+                <p>This is a page to show behind the scenes work at the nonprofit that is made possible by patron donations.</p>
+                {% else %}
+                <p>Only patrons can see what goes on behind the scenes!</p>
+                <p>Become a patron by donating an amount:</p>
+                <a class="btn btn-primary" role="button" href="https://pay-sandbox.gocardless.com/AL000051MBEWF4"><strong>£2</strong>/<br>month</a>
+                <a class="btn btn-primary" role="button" href="https://pay-sandbox.gocardless.com/AL000051MCATJ7"><strong>£4</strong>/<br>month</a>
+                <a class="btn btn-primary" role="button" href="https://pay-sandbox.gocardless.com/AL000051MDGSWX"><strong>£8</strong>/<br>month</a>
+                <a class="btn btn-primary" role="button" href="https://pay-sandbox.gocardless.com/AL000051MEYRQV"><strong>£16</strong>/<br>month</a>
+                {% endif %}
+            </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>My subscription</h1>
+</div>
+<div class="container">
+    <div class="row">
+            <div class="col-sm mt-5 mx-2  mr-md-3 mb-5">
+        {% if mysubs > 0 %}
+                <p>You currently donate £{{ mysubs }} per month.</p>
+                <p>Thank you! <a href="/behindthescenes">See more about what you are helping to fund.</a></p>
+                <p>Change your donation?</p>
+        {% else %}
+                <p>You don't currently donate anything per month.</p>
+                <p>Sign up as a patron?</p>
+        {% endif %}
+                <a class="btn btn-primary" style="{% if mysubs == 2 %} display: none; {% endif %}" role="button" href="https://pay-sandbox.gocardless.com/AL000051MBEWF4"><strong>£2</strong>/<br>month</a>
+                <a class="btn btn-primary" style="{% if mysubs == 4 %} display: none; {% endif %}" role="button" href="https://pay-sandbox.gocardless.com/AL000051MCATJ7"><strong>£4</strong>/<br>month</a>
+                <a class="btn btn-primary" style="{% if mysubs == 8 %} display: none; {% endif %}" role="button" href="https://pay-sandbox.gocardless.com/AL000051MDGSWX"><strong>£8</strong>/<br>month</a>
+                <a class="btn btn-primary" style="{% if mysubs == 16 %} display: none; {% endif %}" role="button" href="https://pay-sandbox.gocardless.com/AL000051MEYRQV"><strong>£16</strong>/<br>month</a>
+
+            </div>
+    </div>
+    {% if mysubs > 0 %}
+    <div class="row">
+        <div class="col-sm mt-5 mx-2  mr-md-3 mb-5">
+        <a href="#" onclick="javascript:alert('Sorry to see you go! You can cancel your donation with your bank directly.')"><small>Cancel subscription</small></a>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
