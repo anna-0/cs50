@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+        {% for listing in listings %}
+        <table>
+            <tbody>
+                <tr class="index">
+                    <td class="img">
+                        {% if listing.image %}<img src="{{ listing.image }}" width="200px">{% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'categorypage' listing.category %}"><div class="badge badge-secondary mb-1">{{ listing.get_category_display }}</div></a>
+                        <a href="{% url 'listing' listing.id %}">
+                            <h3>{{ listing.title }}</h3>
+                        </a>
+                        <p>{{ listing.description|truncatewords:25 }}</p>
+                        <p><em>Added {{ listing.date_added }}</em></p>
+                    </td>
+                    <td class="bid">
+                        <p><strong>Price:</strong>&nbsp;£{{ listing.price }}</p>
+                <a href="{% url 'listing' listing.id %}"><button>Bid now</button></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            
+        {% endfor %}
+
+{% endblock %}

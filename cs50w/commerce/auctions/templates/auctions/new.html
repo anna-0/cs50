@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>New Listing</h2>
+<table><tbody>
+    <form action="{% url 'new' %}" method="post">
+        {% csrf_token %}
+        <tr><td class="form">{{ form.title.error }}Title: </td><td>{{ form.title }}</td></tr>
+        <tr><td class="form">Description: </td><td>{{ form.description }}</td></tr>
+        <tr><td class="form">Starting bid: </td><td>£{{ form.price }}</td></tr>
+        <tr><td class="form">Image URL: </td><td>{{ form.image }}</td></tr>
+        <tr><td class="form">Category: </td><td>{{ form.category }}</td></tr>
+        <td><input type="submit"></td>
+    </form>
+</tbody></table>
+{% endblock %}

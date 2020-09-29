@@ -1,0 +1,52 @@
+body {
+    padding: 10px;
+}
+
+td {
+    min-width: 150px;
+    padding: 20px;
+}
+
+.form {
+    width: 20px;
+}
+
+.img {
+    width: 20vw;
+}
+
+table {
+    width: 95% !important;
+}
+
+.index {
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.bid {
+    text-align: right;
+}
+
+.container {
+    width: 50%;
+}
+
+.btn-secondary {
+    text-align: center;
+    margin: 10px auto;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+h4 {
+    font-size: 15px;
+    margin-top: 1em;
+}
+
+.username {
+    font-style: italic;
+    font-weight: bold;
+}

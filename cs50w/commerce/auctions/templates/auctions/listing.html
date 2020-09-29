@@ -1,0 +1,136 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>{{ listing.title }}</h2>
+<a href="{% url 'categorypage' listing.category %}">
+    <div class="badge badge-secondary mb-3 p-2">{{ listing.get_category_display }}</div>
+</a>
+
+<div class="row">
+
+    <!--Image column-->
+    <div class="col-4">
+        {% if listing.image %}
+            <img src="{{ listing.image }}" width="100%">
+        {% endif %}
+    </div>
+
+    <div class="col-4">
+
+        <!--Description-->
+        <div class="row mb-5">
+            <p>{{ listing.description }}</p>
+        </div>
+
+        
+
+        <div class="row">
+            {% if not message %}
+
+            <small><em>
+                {% if bids == 1 %}
+                    There has been {{ bids }} bid on this item.
+                {% else %}
+                    There have been {{ bids }} bids on this item.
+                {% endif %}
+                {% if ownbid %}
+                    The last bid is yours.
+                {% endif %}
+            </em></small>
+
+        </div>
+        <div class="row mb-1">
+            <strong>Current bid:&nbsp;</strong> £{{ lastbid }}</p>
+        </div>
+        <div class="row mb-5">
+            {% if loggedin and listing.open %}
+                <form action="{% url 'listing' listing.id %}" method="post" name="bid">
+                    {% csrf_token %}
+                    <p><strong>Your bid: </strong>{{ form.amount }}
+                    <button type="submit" name="bid">Place bid</button></p>
+            {% elif not loggedin %} 
+                <a href="{% url 'login' %}">Log in to bid</a>
+            {% endif %}
+        {% endif %}
+            </form>
+
+        {% if message %}
+            <div>{{ message }}&nbsp;</div>
+            <a href="{% url 'listing' listing.id %}">Back</a>
+        {% endif %}
+        </div>
+
+        <!--Watch button or close listing button-->
+        <div class="row mb-5">  
+        {% if loggedin and not message %}
+
+            {% if not ownlisting and listing.open == True %}
+            
+                {% if watching %} 
+                    <a href="{% url 'addwatchlist' listing.id %}"><button class="btn btn-danger">Unwatch</button></a>
+                {% else %}
+                    <a href="{% url 'addwatchlist' listing.id %}"><button class="btn btn-success">Add to watchlist</button></a>
+                {% endif %}
+
+            {% elif ownlisting and listing.open == True %}
+                <form action="{% url 'closebid' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit" name="close">Close listing</button>
+                </form>
+            {% endif %}
+
+        {% endif %}
+
+        {% if listing.open == False %}
+            <p>This listing has closed.&nbsp;</p>
+            {% if winner and ownbid %}
+                <p>You won this auction!</p>
+            {% elif winner and not ownbid %}
+                <p>{{ winner.user }} won this auction.</p>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+
+        <!--Comment section-->
+    <div class="col-4">
+        <div class="row no-gutters">
+        {% if not message %}
+                <h3>Comments</h3>
+        </div>
+            {% if not comments %}
+                <em>Nothing here yet.</em>
+            {% endif %}
+            {% for comment in comments %}
+        <div class="card w-100 my-1">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <small>{{ comment.datetime }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-3">
+                    <span class="username">{{ comment.user }}:&nbsp;</span>
+                {{ comment.comment }}
+            </div>
+        </div>
+            {% endfor %}
+        <div class="row no-gutters w-100">
+            {% if loggedin %}
+                <form action="{% url 'addcomment' listing.id %}" method="post" class="NewComment w-100" name="comment">
+                    {% csrf_token %}
+                    {{ commentform.errors }}
+                    {{ commentform.non_field_errors }}
+                    <h4>Write a comment</h4>
+                    {{ commentform.comment }}
+                    <button type="submit" class="btn btn-secondary">Post</button>
+                </form>
+            {% elif not loggedin and not message %}
+                <a href="{% url 'login' %}">Log in to add a comment</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
