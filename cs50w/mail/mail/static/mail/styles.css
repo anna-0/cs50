@@ -1,0 +1,30 @@
+textarea {
+    min-height: 400px;
+}
+
+.card.true {
+    font-weight: normal;
+    background-color: #f1f1f1;
+}
+
+.card.false {
+    font-weight: bold;
+    background-color: white;
+}
+
+
+.truncate {
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    white-space: nowrap;
+}
+
+.timestamp {
+    text-align: right;
+    float: right;
+}
+
+.col-5 {
+    opacity: 0.5;
+}
