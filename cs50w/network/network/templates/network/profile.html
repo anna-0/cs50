@@ -1,0 +1,96 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+<div class="name">
+    <div>
+        <h1>{{ profile.username }}</h1>
+    </div>
+    <div>
+        {% if request.user.is_authenticated %}
+        {{ request.user.pk|json_script:'current-id' }}
+            {% if request.user != profile %}
+                {% if request.user in profile.followers.all %}
+                <button id="follow" class="btn btn-danger" data-user="{{ profile.id }}">Unfollow</button>
+                {% else %}
+                <button id="follow" class="btn btn-success" data-user="{{ profile.id }}">Follow</button>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="container">
+        <div class="follows card">
+            <span id="followerCount">{{ follower_count }}</span> follower(s)
+        </div>
+        <div class="follows card">
+            <span id="followingCount">{{ following_count }}</span> following
+        </div>
+    </div>
+
+
+</div>
+
+<div class="own-posts" data-id="{{ user.id }}">
+    {% if request.user == profile %}
+    <h2>Your posts</h2>
+    {% else %}
+    <h2>{{ profile.username }}'s posts</h2>
+    {% endif %}
+    {% for post in page_obj %}
+        <div class="card" id="post-{{ post.id }}">
+            <span id="username"></span>
+            <span id="text">{{ post.text }}</span>
+            <form style="display: none;" id="edit-form">
+                <textarea id="edit-text" class="form-control">{{ post.text }}</textarea>
+                <input type="button" id="save" value="Save" onclick="saveEdit(this)" data-id="{{ post.id }}" class="btn btn-secondary"/>
+            </form>
+            <span id="timestamp">{{ post.timestamp }}</span>
+            <span id="likes">
+                <span class="likescount" data-id="{{ post.likes.count }}"
+                {% if request.user in post.likes.all %}
+                data-is_liked="yes"
+                {% else %}
+                data-is_liked="no"
+                {% endif %}>
+                {{ post.likes.count }}
+                </span> like(s)
+            </span>
+            {% if post.user == request.user %}<a href="" onclick="return editPost(this)" id="edit" data-id="{{ post.id }}">Edit</a>
+            {% elif request.user.is_authenticated %}
+            {{ request.user.pk|json_script:'user-id' }}
+                {% if request.user in post.likes.all %}
+                    <button type="submit" data-id="{{ post.id }}" class="btn btn-primary like-button">
+                        👎 Unlike
+                    </button>
+                {% else %}
+                    <button type="submit" data-id="{{ post.id }}" class="btn btn-primary like-button">
+                        👍 Like
+                    </button>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
